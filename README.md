@@ -1,2 +1,3 @@
-# training_engineer_homework12
-Docker Compose
+# Training engineer
+
+## Homework 12 - Docker Compose
