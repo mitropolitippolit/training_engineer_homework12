@@ -1,0 +1,32 @@
+version: '3'
+services:
+  pkg:
+    build: pkg
+    volumes:
+      - share:/data/app/target
+  db:
+    image: mariadb:10.1
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mydata
+    depends_on:
+      - pkg
+    expose:
+      - 3306
+    volumes:
+      - ./db:/var/lib/mysql
+  app:
+    environment:
+      - WAR_FILE_PATH=/share/App42PaaS-Java-MySQL-Sample-0.0.1-SNAPSHOT.war
+    build: app
+    ports:
+      - 80:8080
+    depends_on:
+      - db
+      - pkg
+    links:
+      - db
+    volumes:
+      - share:/share
+volumes:
+  share:
